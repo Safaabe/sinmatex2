@@ -69,7 +69,9 @@
             display: flex;
             flex-direction: row;
             margin-left: 250px;
-            margin-top: 150px;
+            margin-top: 90px;
+            margin-bottom: 20px;
+
         }
 
         .card {
@@ -81,6 +83,8 @@
             width: 250px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+
         }
 
         .card h4 {
@@ -89,19 +93,39 @@
         }
 
         .client {
-            border: 1px solid black;
-            /* Adding a border to make it visible */
-            width: 100px;
-            height: 250px;
+            border: 1px solid transparent;
+            border-radius: 15px;
+            width: 430px;
+            height: 300px;
             background-color: #fff;
-            /* Adding a background color */
+            margin-left: 250px;
+            margin-top: 30px;
+
+
+
+        }
+
+        .cmd {
+            border: 1px solid transparent;
+            border-radius: 15px;
+            width: 600px;
+            height: 300px;
+            background-color: #fff;
+            margin-left: 700px;
+            position: absolute;
+            top: 250px;
+
+
+
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="header"></div>
+        <div class="header">
+            <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;">dashboard</h2>
+        </div>
 
         <div class="sidebar">
             <div class="logo"><img src="img/sinmatexlogo.png" alt="simatex"></div>
@@ -112,6 +136,7 @@
                 <li><a href=""><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
                 <li><a href=""><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
                 <li><a href=""><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>
+                <div style="margin-top: 220px;"></div>
                 <li><a href=""><i class='bx bx-log-out'></i>Déconnexion</a></li>
             </ul>
         </div>
@@ -131,9 +156,15 @@
             <h4>Commandes <br>non fini</h4>
         </div>
     </section>
-    <section>
-        <div class="client"></div>
-        <h4>Clients</h4>
+    <section class="client">
+        <div></div>
+        <h4 style="margin-left: 10px;">Clients</h4>
+
+
+    </section>
+    <section class="cmd">
+        <div></div>
+        <h4 style="margin-left: 10px;">Commandes non fini</h4>
 
 
     </section>
