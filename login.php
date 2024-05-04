@@ -26,6 +26,7 @@ function verifyPassword($password, $hashedPassword)
     return password_verify($password, $hashedPassword);
 }
 
+// Login process
 if (isset($_POST['username'], $_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -38,7 +39,7 @@ if (isset($_POST['username'], $_POST['password'])) {
         // Login successful, start session and redirect to admin dashboard
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $username;
-        header('Location: admin_dashboard.php');
+        header('Location:dashboard.php');
         exit;
     } else {
         // Login failed, display error message
@@ -51,8 +52,10 @@ $conn->close();
 
 
 
+
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -68,8 +71,9 @@ $conn->close();
 
         }
 
-        body {
-            background-image: url('/img/sin.jpg');
+
+        .page {
+            background-image: url('img/sin.jpg');
             background-repeat: no-repeat;
             background-size: cover;
 
@@ -157,19 +161,19 @@ $conn->close();
 </head>
 
 <body>
-    <form class="form" action="{{route('login')}}" method="Post">
+    <div class="page"></div>
+    <form class="form" action="login.php" method="post">
         <p id="titre">Login</p>
         <div class="input-container">
-            <input type="text" id="email" required>
-            <label for="email">email</label>
+            <input type="text" id="username" name="username" required>
+            <label for="username">Username</label>
         </div>
         <div class="input-container">
-            <input type="password" id="password" required>
-            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+            <label for="password">Password</label>
         </div>
         <button type="submit" id="boutton">Login</button>
     </form>
-
     <script>
         const inputContainers = document.querySelectorAll('.input-container');
 
