@@ -26,33 +26,28 @@ function verifyPassword($password, $hashedPassword)
     return password_verify($password, $hashedPassword);
 }
 
-// Login process
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['username'], $_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Retrieve hashed password from database
-    $sql = "SELECT username, password FROM admin_users WHERE username = '$username'";
-    $result = mysqli_query($conn, $sql);
+    // Query to check if username and password exist
+    $query = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($query);
 
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        if (verifyPassword($password, $row['password'])) {
-            // Start a session and store admin username
-            session_start();
-            $_SESSION['admin_username'] = $row['username'];
-            header("location: dashboard.php");
-        } else {
-            $error = "Invalid username or password.";
-        }
+    if ($result->num_rows > 0) {
+        // Login successful, start session and redirect to admin dashboard
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        header('Location: admin_dashboard.php');
+        exit;
     } else {
-        $error = "Invalid username or password.";
+        // Login failed, display error message
+        echo "Invalid username or password";
     }
 }
 
 $conn->close();
 ?>
-
 
 
 
