@@ -42,9 +42,7 @@ if (isset($_POST['username'], $_POST['password'])) {
         header('Location:dashboard.php');
         exit;
     } else {
-        // Login failed, display error message
-        echo "Invalid username or password";
-    }
+       $errorMsg = "Invalid username or password";
 }
 
 $conn->close();

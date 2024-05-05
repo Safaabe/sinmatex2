@@ -13,9 +13,9 @@
             margin: 0;
             padding: 0;
             background-color: #eee;
-            /* Red background for the entire page */
+           
             font-family: "Rubik", sans-serif;
-            /* Applying Rubik font to all elements */
+           
         }
 
         .header {
@@ -124,20 +124,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;">dashboard</h2>
+            <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;color:#102C57;">dashboard</h2>
         </div>
 
         <div class="sidebar">
             <div class="logo"><img src="img/sinmatexlogo.png" alt="simatex"></div>
             <ul>
-                <li><a href=""><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
-                <li><a href=""><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
+                <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
+                <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
                 <li><a href=""><i class='bx bx-box'></i>Commandes</a></li>
                 <li><a href=""><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
                 <li><a href=""><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
                 <li><a href=""><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>
                 <div style="margin-top: 220px;"></div>
-                <li><a href=""><i class='bx bx-log-out'></i>Déconnexion</a></li>
+                <li><a href="logout.php"><i class='bx bx-log-out'></i>Déconnexion</a></li>
             </ul>
         </div>
     </div>
