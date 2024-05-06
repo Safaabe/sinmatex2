@@ -15,12 +15,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //ajouter 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST["nom"];
     $adress = $_POST["adress"];
     $email = $_POST["email"];
     $tel = $_POST["tel"];
-}
+
     // Prepare an SQL statement
     $stmt = $conn->prepare("INSERT INTO clients (nomClient, adressClient, emailClient, telClient) VALUES (?, ?, ?, ?)");
 
@@ -33,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Erreur lors de l'ajout du client: " . $conn->error;
     }
+}
 // Retrieve data from the clients table
 $stmt = $conn->prepare("SELECT * FROM clients");
 $stmt->execute();
@@ -48,7 +51,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clients</title>
+    <title>Clients</title>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -135,6 +138,7 @@ $conn->close();
         label{
             font-size: 15px;
             margin-left: 50px;
+            font-weight: bold;
            
         } 
         .cli{
@@ -171,11 +175,11 @@ $conn->close();
         </div>
 
         <div class="sidebar">
-            <div class="logo"><img src="img/sinmatexlogo.png" alt="simatex"></div>
+            <div class="logo"><img src="img/sinmatex.png" alt="simatex"></div>
             <ul>
                 <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
                 <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
-                <li><a href=""><i class='bx bx-box'></i>Commandes</a></li>
+                <li><a href="commande.php"><i class='bx bx-box'></i>Commandes</a></li>
                 <li><a href=""><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
                 <li><a href=""><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
                 <li><a href=""><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>

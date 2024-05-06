@@ -30,7 +30,7 @@ function verifyPassword($password, $hashedPassword)
 if (isset($_POST['username'], $_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+}
     // Query to check if username and password exist
     $query = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($query);
