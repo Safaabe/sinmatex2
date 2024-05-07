@@ -4,30 +4,54 @@ $username = 'root';
 $password = '';
 $dbname = 'sinmatexdb';
 
-
-
 $conn = new mysqli($host, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Erreur de connexion: " . $conn->connect_error);
 }
 
-// Requête SQL pour récupérer les noms des clients
-$sql = "SELECT nomClient FROM clients";
-$result = $conn->query($sql);
+$query = $conn->prepare("SELECT * FROM `clients` ");
+$query->execute();
+$result = $query->get_result(); // Get the result set
+$num_rows = $result->num_rows; // Get the number of rows
 
-// Initialisation d'une variable pour stocker les options de la liste déroulante
-$selectOptions = "";
+$clients = $result->fetch_all(MYSQLI_ASSOC);
 
-// Si des clients sont trouvés, générer les options de la liste déroulante
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $selectOptions .= "<option value='" . $row["nomClient"] . "'>" . $row["nomClient"] . "</option>";
+if (isset($_POST["submit"])) {
+    if (!empty($_POST["nom"]) && !empty($_POST["desc"]) && !empty($_POST["id_client"])) {
+        $allowedTypes_carte = ['jpeg', 'png', 'jpg'];
+        $maxSize = 10 * 1024 * 1024;
+        $file_carte =  $_FILES["image"]["name"];
+        $ext_carte = pathinfo($file_carte, PATHINFO_EXTENSION);
+        if (in_array($ext_carte, $allowedTypes_carte) && $_FILES['image']['size'] <= $maxSize) {
+            $carte_name = "." . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $carte_path = "uploads/" . $_POST["nom"] . "" . $carte_name;
+            $path_carte = "uploads/" . $carte_path;
+
+            move_uploaded_file($_FILES['image']['tmp_name'], $carte_path);
+            
+            try {
+                $nom = $_POST["nom"];
+                $desc = $_POST["desc"];
+                $id_client = $_POST["id_client"];
+                $sql = "INSERT INTO `articles`  (nom_article,desc_article,image_article,id_client) VALUES (?, ?, ?, ?)";
+                $query = $conn->prepare($sql);
+                $query->bind_param('sssi', $nom, $desc, $carte_path, $id_client);
+                $query->execute();
+                
+                // Redirect to articles.php after successful insertion
+                header("Location: articles.php");
+                exit(); // Make sure to exit after redirection
+            } catch (Exception $e) {
+                echo "Erreur " . $e->getMessage();
+            }
+        } else {
+            echo "<p class='alert alert-warning' role='alert'>Le fichier carte doit être une image de type JPEG ou PNG et ne doit pas dépasser 3Mo.</p>";
+        }
+    } else {
+        echo "empty";
     }
-} else {
-    $selectOptions = "<option value=''>Aucun client trouvé</option>";
 }
-
 // Fermer la connexion à la base de données
 $conn->close();
 ?>
@@ -111,7 +135,7 @@ $conn->close();
         }
 
         .form input[type="text"],
-        .form input[type="button"],
+        .form input[type="submit"],
         .form input[type="file"] .form select {
             display: block;
             margin-bottom: 15px;
@@ -121,7 +145,7 @@ $conn->close();
             border: 1px solid gray;
         }
 
-        .form input[type="button"] {
+        .form input[type="submit"] {
             background-color: #102C57;
             color: #fff;
             font-family: bold;
@@ -179,18 +203,22 @@ $conn->close();
         </div>
         <div class="form">
             <h2>Ajouter un article</h2>
-            <form action="" class="ajouter">
+            <form method="post" enctype="multipart/form-data" class="ajouter">
                 <label for="">Nom d'article:</label>
                 <input type="text" name="nom">
                 <label for="">Description:</label>
-                <input type="text" name="description">
+                <input type="text" name="desc">
                 <label for="">Image:</label>
                 <input type="file" name="image">
                 <label for="">Clients:</label>
-                <select name="client">
-                    <?php echo $selectOptions; ?>
-                    <input type="button" value="ajouter Article">
+                <select name="id_client">
+                    <?php
+                    foreach ($clients as $client) {
+                        echo '<option value="' . $client["id"] . '">' . $client["nomClient"] . '</option>';
+                    }
+                    ?>
                 </select>
+                <input type="submit" value="Ajouter Article">
             </form>
         </div>
         <div class="tab">
