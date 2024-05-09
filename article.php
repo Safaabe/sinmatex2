@@ -10,52 +10,72 @@ if ($conn->connect_error) {
     die("Erreur de connexion: " . $conn->connect_error);
 }
 
-$query = $conn->prepare("SELECT * FROM `clients` ");
-$query->execute();
-$result = $query->get_result(); // Get the result set
-$num_rows = $result->num_rows; // Get the number of rows
+$query_clients = $conn->prepare("SELECT * FROM `clients` ");
+$query_clients->execute();
+$result_clients = $query_clients->get_result(); // Get the result set
+$clients = $result_clients->fetch_all(MYSQLI_ASSOC);
 
-$clients = $result->fetch_all(MYSQLI_ASSOC);
+$query_articles = $conn->prepare("SELECT * FROM `articles` ");
+$query_articles->execute();
+$result_articles = $query_articles->get_result(); // Get the result set
+$articles = $result_articles->fetch_all(MYSQLI_ASSOC);
 
-if (isset($_POST["submit"])) {
-    if (!empty($_POST["nom"]) && !empty($_POST["desc"]) && !empty($_POST["id_client"])) {
-        $allowedTypes_carte = ['jpeg', 'png', 'jpg'];
-        $maxSize = 10 * 1024 * 1024;
-        $file_carte =  $_FILES["image"]["name"];
-        $ext_carte = pathinfo($file_carte, PATHINFO_EXTENSION);
-        if (in_array($ext_carte, $allowedTypes_carte) && $_FILES['image']['size'] <= $maxSize) {
-            $carte_name = "." . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-            $carte_path = "uploads/" . $_POST["nom"] . "" . $carte_name;
-            $path_carte = "uploads/" . $carte_path;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nom = $_POST["nom"];
+    $desc = $_POST["desc"];
+    $id_client = $_POST["id_client"];
+    $uploadOk = 1;
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $carte_path);
-            
-            try {
-                $nom = $_POST["nom"];
-                $desc = $_POST["desc"];
-                $id_client = $_POST["id_client"];
-                $sql = "INSERT INTO `articles`  (nom_article,desc_article,image_article,id_client) VALUES (?, ?, ?, ?)";
-                $query = $conn->prepare($sql);
-                $query->bind_param('sssi', $nom, $desc, $carte_path, $id_client);
-                $query->execute();
-                
-                // Redirect to articles.php after successful insertion
-                header("Location: articles.php");
-                exit(); // Make sure to exit after redirection
-            } catch (Exception $e) {
-                echo "Erreur " . $e->getMessage();
+    // Handle image upload
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if ($check !== false) {
+            // Check file size
+            if ($_FILES["image"]["size"] > 5000000) { // Adjust size limit as needed
+                echo "Désolé, votre fichier est trop volumineux.";
+                $uploadOk = 0;
+            }
+            // Allow certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Désolé, seuls les fichiers JPG, JPEG, PNG et GIF sont autorisés.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 1) {
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    echo "L'image " . htmlspecialchars(basename($_FILES["image"]["name"])) . " a été téléchargée avec succès.";
+
+                    // Insert data into database only if image upload is successful
+                    $query_insert_article = $conn->prepare("INSERT INTO articles (nom_article, desc_article, image_article, id_client) VALUES (?, ?, ?, ?)");
+                    $query_insert_article->bind_param("sssi", $nom, $desc, $target_file, $id_client);
+                    if ($query_insert_article->execute()) {
+                        echo "Article ajouté avec succès!";
+                    } else {
+                        echo "Erreur lors de l'ajout de l'article: " . $conn->error;
+                    }
+                } else {
+                    echo "Désolé, une erreur s'est produite lors du téléchargement de votre fichier.";
+                }
             }
         } else {
-            echo "<p class='alert alert-warning' role='alert'>Le fichier carte doit être une image de type JPEG ou PNG et ne doit pas dépasser 3Mo.</p>";
+            echo "Le fichier n'est pas une image valide.";
+            $uploadOk = 0;
         }
     } else {
-        echo "empty";
+        echo "Erreur: Aucune image téléchargée.";
+        $uploadOk = 0;
+    }
+
+    if ($uploadOk != 1) {
+        echo "Tous les champs doivent être remplis!";
     }
 }
-// Fermer la connexion à la base de données
-$conn->close();
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -162,7 +182,7 @@ $conn->close();
             width: 250px;
             height: 23px;
             border-radius: 8px;
-            border: 1px solid gray;
+           border: 1px solid gray;
         }
 
         .form select {
@@ -179,6 +199,47 @@ $conn->close();
             font-size: 14px;
             margin-bottom: 10px;
         }
+        .customTable {
+    width: 95%; /* Adjust the width as needed */
+    max-width: 800px; /* Set a maximum width */
+    margin-left: 20px; /* Center the table horizontally */
+    margin-right: auto;
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #0a2558;
+    border-style: solid;
+    color: #000000;
+    margin-top: 20px;
+   
+}
+
+table.customTable thead {
+    color: white;
+    background-color: #0a2558;
+}
+
+table.customTable td,
+table.customTable th {
+    border-width: 2px;
+    border-color: #081d45;
+    border-style: solid;
+    padding: 5px;
+    width: auto; /* Let the width adjust automatically */
+}
+.p2{
+    border: 1px solid transparent;
+    border-radius: 15px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: 600px;
+    position: absolute;
+    top: 75px;
+    max-width: 750px;
+    height: 400px;
+    background-color: #fff;
+  
+        
+}
     </style>
 </head>
 
@@ -221,13 +282,51 @@ $conn->close();
                 <input type="submit" value="Ajouter Article">
             </form>
         </div>
-        <div class="tab">
-
+        <div style="width:80%" class="p2" >
+            <table class="customTable">
+                <thead>
+                    <tr>
+                        <th>Ref</th>
+                        <th>Image</th>
+                        <th>Nom</th>
+                        <th>Client</th>
+                        <th>Modifier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($articles as $article): ?>
+                <tr>
+                    <td><?php echo $article['id']; ?></td>
+                    <td><img src="<?php echo $article['image_article']; ?>" alt="Article Image" style="width: 60px;"></td>
+                    <td><?php echo $article['nom_article']; ?>-<?php echo $article['desc_article']; ?></td>
+                    <td>
+                        <?php 
+                        // Fetch client name based on client id
+                        $client_id = $article['id_client'];
+                        $client_name = '';
+                        foreach ($clients as $client) {
+                            if ($client['id'] == $client_id) {
+                                $client_name = $client['nomClient'];
+                                break;
+                            }
+                        }
+                        echo $client_name;
+                        ?>
+                    </td>
+                    <td style="width: 20px;">
+    <a href="modifier_article.php?id=<?php echo $article['id']; ?>">
+        <i style="font-size: 20px;color: #FDDA0D !important" class="bx bx-edit"></i>
+    </a>
+    <a href="./supprimer.php?ref=<?php echo $article['id']; ?>">
+        <i style="font-size: 20px;color: #FF0000 !important" class="bx bx-trash"></i>
+    </a>
+</td>
+                </tr>
+            <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-
 </body>
 
 </html>

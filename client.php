@@ -48,6 +48,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +56,7 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-   <style>
+    <style>
         body {
             margin: 0;
             padding: 0;
@@ -120,7 +121,7 @@ $conn->close();
             width: 430px;
             padding-top: 20px;
             height: 500px;
-           
+
         }
 
         .form input[type="text"],
@@ -130,23 +131,25 @@ $conn->close();
             margin-bottom: 10px;
             display: block;
             margin-left: 40px;
-            margin-top:10px ;
+            margin-top: 10px;
             margin-bottom: 20px;
             border: 1px solid black;
             border-radius: 15px;
-        } 
-        label{
+        }
+
+        label {
             font-size: 15px;
             margin-left: 50px;
             font-weight: bold;
-           
-        } 
-        .cli{
+
+        }
+
+        .cli {
             border: 1px solid transparent;
             border-radius: 15px;
             box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
             margin-left: 700px;
-            margin-top:-520px;
+            margin-top: -520px;
             width: 630px;
             height: 500px;
             background-color: #fff;
@@ -157,7 +160,8 @@ $conn->close();
             width: 100%;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #000;
             padding: 8px;
             text-align: left;
@@ -168,6 +172,7 @@ $conn->close();
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -180,9 +185,9 @@ $conn->close();
                 <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
                 <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
                 <li><a href="commande.php"><i class='bx bx-box'></i>Commandes</a></li>
-                <li><a href=""><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
-                <li><a href=""><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
-                <li><a href=""><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>
+                <li><a href="fournisseur.php"><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
+                <li><a href="achat.php"><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
+                <li><a href="article.php"><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>
                 <div style="margin-top: 220px;"></div>
                 <li><a href="logout.php"><i class='bx bx-log-out'></i>Déconnexion</a></li>
             </ul>
@@ -206,26 +211,27 @@ $conn->close();
         <div class="cli">
             <h2 style="margin-left:30px;margin-bottom:30px;font-size:24px; font-family: 'PT Sans', sans-serif;">Nos clients</h2>
             <table>
-        <thead>
-            <tr>
-                <th style="color: #fff;">Nom</th>
-                <th style="color: #fff;">Adresse</th>
-                <th style="color: #fff;">Email</th>
-                <th style="color: #fff;">Téléphone</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($clients as $client) {?>
-            <tr>
-                <td><?= $client['nomClient']?></td>
-                <td><?= $client['adressClient']?></td>
-                <td><?= $client['emailClient']?></td>
-                <td><?= $client['telClient']?></td>
-            </tr>
-            <?php }?>
-        </tbody>
-    </table>
+                <thead>
+                    <tr>
+                        <th style="color: #fff;">Nom</th>
+                        <th style="color: #fff;">Adresse</th>
+                        <th style="color: #fff;">Email</th>
+                        <th style="color: #fff;">Téléphone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clients as $client) { ?>
+                        <tr>
+                            <td><?= $client['nomClient'] ?></td>
+                            <td><?= $client['adressClient'] ?></td>
+                            <td><?= $client['emailClient'] ?></td>
+                            <td><?= $client['telClient'] ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
+
 </html>
