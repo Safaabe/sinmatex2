@@ -24,22 +24,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tel = $_POST["tel"];
 
     // Prepare an SQL statement
-    $stmt = $conn->prepare("INSERT INTO clients (nomClient, adressClient, emailClient, telClient) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO fournisseurs (nomFournisseur, adressFournisseur, emailFournisseur, telFournisseur) VALUES (?, ?, ?, ?)");
 
     // Bind parameters to the prepared statement
     $stmt->bind_param("ssss", $nom, $adress, $email, $tel);
 
     // Execute the prepared statement
     if ($stmt->execute()) {
-        echo "Client ajouté avec succès.";
+        echo "Fournisseur ajouté avec succès.";
     } else {
         echo "Erreur lors de l'ajout du client: " . $conn->error;
     }
 }
 // Retrieve data from the clients table
-$stmt = $conn->prepare("SELECT * FROM clients");
+$stmt = $conn->prepare("SELECT * FROM fournisseurs");
 $stmt->execute();
-$clients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$fournisseurs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 
 // Close the connection
@@ -52,7 +52,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clients</title>
+    <title>fournisseurs</title>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -151,7 +151,7 @@ $conn->close();
             margin-left: 700px;
             margin-top: -520px;
             width: 630px;
-            height: 600px;
+            height: 500px;
             background-color: #fff;
         }
 
@@ -176,7 +176,7 @@ $conn->close();
 <body>
     <div class="container">
         <div class="header">
-            <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;color:#102C57;">Clients</h2>
+            <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;color:#102C57;">Fournisseur</h2>
         </div>
 
         <div class="sidebar">
@@ -194,22 +194,22 @@ $conn->close();
         </div>
 
         <div class="form">
-            <h3 style="margin-left:30px;margin-bottom:30px;font-size:24px; font-family: 'PT Sans', sans-serif;">Ajouter un client</h3>
+            <h3 style="margin-left:30px;margin-bottom:30px;font-size:24px; font-family: 'PT Sans', sans-serif;">Ajouter un Fournisseur</h3>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <label for="">Nom clients:</label>
+                <label for="">Nom Fournisseur:</label>
                 <input type="text" name="nom" placeholder="Nom">
-                <label for="">Adress clients:</label>
+                <label for="">Adress Fournisseur:</label>
                 <input type="text" name="adress" placeholder="Adresse">
-                <label for="">Email clients:</label>
+                <label for="">Email Fournisseur:</label>
                 <input type="text" name="email" placeholder="Email">
-                <label for="">Téléphone clients:</label>
+                <label for="">Téléphone Fournisseur:</label>
                 <input type="text" name="tel" placeholder="Téléphone">
                 <input type="submit" name="ajouter" value="Ajouter" style="background-color: #102C57;color:#fff;font-size:16px;border:none;margin-left:50px">
             </form>
         </div>
 
         <div class="cli">
-            <h2 style="margin-left:30px;margin-bottom:30px;font-size:24px; font-family: 'PT Sans', sans-serif;">Nos clients</h2>
+            <h2 style="margin-left:30px;margin-bottom:30px;font-size:24px; font-family: 'PT Sans', sans-serif;">Nos fournisseurs</h2>
             <table>
                 <thead>
                     <tr>
@@ -220,12 +220,12 @@ $conn->close();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($clients as $client) { ?>
+                    <?php foreach ($fournisseurs as $fournisseur) { ?>
                         <tr>
-                            <td><?= $client['nomClient'] ?></td>
-                            <td><?= $client['adressClient'] ?></td>
-                            <td><?= $client['emailClient'] ?></td>
-                            <td><?= $client['telClient'] ?></td>
+                            <td><?= $fournisseur['nomFournisseur'] ?></td>
+                            <td><?= $fournisseur['adressFournisseur'] ?></td>
+                            <td><?= $fournisseur['emailFournisseur'] ?></td>
+                            <td><?= $fournisseur['telFournisseur'] ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>

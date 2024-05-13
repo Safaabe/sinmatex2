@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,6 +71,48 @@
         ul li i {
             margin-right: 10px;
         }
+        label {
+            font-size: 15px;
+            margin-left: 0px;
+          
+            padding-bottom: 20px;
+            font-weight: 600;
+
+        }
+        .bon{
+            margin-left: 220px;
+            margin-top: 82px;
+            width: 250px;
+            padding: 20px;
+            border: 1px solid transparent;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            background-color: #fff;
+        }
+        .bon input[type="text"]
+         {
+            width: 180px;
+            padding: 7px;
+            margin-bottom: 20px;
+            display: block;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .bon input[type="submit"] {
+            width: 198px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: block;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            background-color: #102C57;
+            color: #fff;
+            font-size: 15px;
+            margin-top: 10px;
+            
+
+        }
+
         
     </style>
 </head>
@@ -87,9 +137,16 @@
             </ul>
         </div>
        
-
+<div class="bon">
+    <h4 style="font-size: 23px;">Bon d'achat</h4>
+    <form action="nvcommande.php"  method="get">
+    <label for="">Ref d'article:</label>
+    <input type="text" name="ref">
+    <input type="submit" value="crée commande">
+    </form>
+</div>
     
-
+    </div>
 </body>
 
 </html>
