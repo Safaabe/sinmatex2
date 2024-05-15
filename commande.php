@@ -88,6 +88,7 @@
             box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             background-color: #fff;
+            height: 200px;
         }
         .bon input[type="text"]
          {
@@ -112,7 +113,57 @@
             
 
         }
+        .customTable {
+    width: 95%; /* Adjust the width as needed */
+    max-width: 800px; /* Set a maximum width */
+    margin-left: 10px; /* Center the table horizontally */
+    margin-right: auto;
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: #0a2558;
+    border-style: solid;
+    color: #000000;
+    margin-top: 30px;
+    flex: 1;
+}
 
+table.customTable thead {
+    color: white;
+    background-color: #0a2558;
+}
+
+table.customTable td,
+table.customTable th {
+    border-width: 2px;
+    border-color: #081d45;
+    border-style: solid;
+    padding: 5px;
+    width: auto; /* Let the width adjust automatically */
+}
+.main{
+    display: flex;
+    flex-direction: row;
+}
+.commande{
+    border:1px solid transparent;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 15px;
+    margin-left: 50px;
+    margin-top: 90px;
+    display: flex; /* Use flexbox */
+    flex-direction: column;
+padding: 20px;
+}
+.search-box {
+            position: relative;
+            height: 50px;
+            max-width: 550px;
+            width: 100%;
+            margin-left: 20px;
+            margin-top: 5px;
+        }
         
     </style>
 </head>
@@ -121,6 +172,12 @@
     <div class="container">
         <div class="header">
             <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;color:#102C57;">Commandes</h2>
+            <div class="search-box">
+         <form action="chercher_commande.php" method="get">
+         <input style="padding:5px" type="text" name="ref" placeholder="Recherche..." />
+         <button style="cursor:pointer" type="submit"><i class="bx bx-search"></i></button>
+         </form>
+        </div>
         </div>
 
         <div class="sidebar">
@@ -136,16 +193,84 @@
                 <li><a href="logout.php"><i class='bx bx-log-out'></i>Déconnexion</a></li>
             </ul>
         </div>
-       
-<div class="bon">
+       <div class="main">
+        <div class="bon">
     <h4 style="font-size: 23px;">Bon d'achat</h4>
     <form action="nvcommande.php"  method="get">
     <label for="">Ref d'article:</label>
     <input type="text" name="ref">
     <input type="submit" value="crée commande">
     </form>
+    </div>
+    <div class="commande">
+    <div style="margin-left: 10px; margin-top:10px; font-size:20px;font-weight:600 ;">Commandes</div>
+    <table class="customTable">
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Client</th>
+                <th>Article</th>
+                <th>Date Commande</th>
+                <th>Date Livraison</th>
+                <th>Quantité</th>
+                <th>Statut</th>
+                <th>Reçu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            
+
+            // Database connection settings
+            $host = '127.0.0.1';
+            $username = 'root';
+            $password = '';
+            $dbname = 'sinmatexdb';
+            
+            // Create connection
+            $conn = new mysqli($host, $username, $password, $dbname);
+            
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+                // Fetching data from the commandes table
+                $query = $conn->prepare("SELECT * FROM commandes");
+                $query->execute();
+                $result = $query->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>N°". $row["id"] . "</td>";
+                    // Fetching client information
+                    $stmt = $conn->prepare("SELECT * FROM clients WHERE id=? LIMIT 1"); 
+                    $stmt->bind_param("i", $row["id_client"]);
+                    $stmt->execute(); 
+                    $client = $stmt->get_result()->fetch_assoc();
+                    echo "<td>". $client["nomClient"] . "</td>";
+                    // Fetching article information
+                    $stmt = $conn->prepare("SELECT * FROM articles WHERE id=? LIMIT 1"); 
+                    $stmt->bind_param("i", $row["articleRef"]); 
+                    $stmt->execute(); 
+                    $article = $stmt->get_result()->fetch_assoc();
+                    echo '<td><img width="60" src="'.$article["image_article"].'"/></td>';
+                    echo "<td>". $row["date_commande"] . "</td>";
+                    echo "<td>". $row["date_livraison"] . "</td>";
+                    echo "<td>". $row["quantity"] . "</td>";
+                    if($row["fini"] == 1){
+                        echo "<td>fini</td>";
+                        echo '<td><a href="./bonCommande.php?numcommande=' .$row["id"]   .'">  <i style="font-size:20px;color:#2697ff !important" class="bx bx-printer"></i></td>';
+                    } else {
+                        echo "<td>pas fini</td>";
+                        echo '<td><a href="./bon_commande.php?numcommande=' .$row["id"]   .'">  <i style="font-size:20px;color:#2697ff !important" class="bx bx-printer"></i></a><a href="./fini_commande.php?ref='.$row["id"].'"><i style="font-size:20px;color:#008000 !important" class="bx bx-check-circle"></i></a></td>';
+                    }
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
 </div>
-    
+       </div>
+
     </div>
 </body>
 

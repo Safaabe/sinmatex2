@@ -225,45 +225,41 @@ $conn->close();
 
 </html>
 <?php
+    // Create a new connection
+    $conn2 = new mysqli($host, $username, $password, $dbname);
 
+    // Check the new connection
+    if ($conn2->connect_error) {
+        die("Connection failed: " . $conn2->connect_error);
+    }
 
-// Database connection settings
-$host = '127.0.0.1';
-$username = 'root';
-$password = '';
-$dbname = 'sinmatexdb';
+    if (isset($_POST["nv_submit"])) {
+        // Get values from the form
+        $id_article = $article_id; // Corrected: Use the fetched article ID
+        $id_client = $row["id_client"]; // Corrected: Use the fetched client ID
+        $s = intval($_POST["taille_s"]);
+        $m = intval($_POST["taille_m"]);
+        $l = intval($_POST["taille_l"]);
+        $x = intval($_POST["taille_x"]);
+        $xl = intval($_POST["taille_xl"]);
+        $xxl = intval($_POST["taille_2xl"]);
+        $xxxl = intval($_POST["taille_3xl"]);
+        $quantity = $s + $m + $l + $x + $xl + $xxl + $xxxl; // Calculate total quantity
 
-// Create connection
-$conn = new mysqli($host, $username, $password, $dbname);
+        $date_commande = $_POST["date_commande"];
+        $date_livraison = $_POST["date_livraison"];
+        $fini = false; // Assuming it's not finished initially
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+        // Insert the order into the database
+        $sql = "INSERT INTO commandes (articleRef, id_client, taille_s, taille_m, taille_l, taille_x, taille_xl, taille_2xl, taille_3xl, quantity, date_commande, date_livraison, fini) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = $conn2->prepare($sql);
+        $query->bind_param('iiiiiiiiissss', $id_article, $id_client, $s, $m, $l, $x, $xl, $xxl, $xxxl, $quantity, $date_commande, $date_livraison, $fini);
+        $query->execute();
 
+        echo "<script>alert('Commande a été bien ajoutée !');</script>";
+        echo "<script>window.location.href='commande.php'</script>";
+    }
 
-if(isset($_POST["nv_submit"])){
-
-    $id_article =@$row["ref"];
-   $id_client = @$client["id_client"];
-   $s = @intval($_POST["taille_s"]);
-   $m = @intval($_POST["taille_m"]);
-   $l = @intval($_POST["taille_l"]);
-   $x = @intval($_POST["taille_x"]);
-   $xl =@intval($_POST["taille_xl"]);
-   $xxl =@intval($_POST["taille_2xl"]);
-   $xxxl=@intval($_POST["taille_3xl"]);
-   $quantity = @$s + @$m + @$l + @$x + @$xl + @$xxl + @$xxxl;
-   $fini = false;
-   $date_commande = @$_POST["date_commande"];
-   $date_livraison = @$_POST["date_livraison"];
-
-    $sql = "INSERT INTO commandes (articleRef, id_client, taille_s, taille_m, taille_l, taille_x, taille_xl, taille_2xl, taille_3xl, quantity, date_commande, date_livraison, fini) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $query = $conn->prepare($sql);
-    $query->bind_param('iiiiiiiiissss', $id_article, $id_client, $s, $m, $l, $x, $xl, $xxl, $xxxl, $quantity, $date_commande, $date_livraison, $fini);
-    $query->execute();
-    echo "<script>alert('Commande a ètè bien ajoutée !');</script>";
-    echo "<script>window.location.href='commande.php'</script>";
-
-}
-?>
+    // Close the second connection
+    $conn2->close();
+    ?>
