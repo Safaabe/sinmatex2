@@ -1,3 +1,60 @@
+<?php
+session_start();
+
+// Database connection settings
+$host = '127.0.0.1';
+$username = 'root';
+$password = '';
+$dbname = 'sinmatexdb';
+
+// Create connection
+$conn = new mysqli($host, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch total clients
+$query = $conn->prepare("SELECT COUNT(*) as total_clients FROM clients");
+$query->execute();
+$result = $query->get_result();
+$total_clients = $result->fetch_assoc()['total_clients'];
+
+// Fetch total commandes
+$query = $conn->prepare("SELECT COUNT(*) as total_commandes FROM commandes");
+$query->execute();
+$result = $query->get_result();
+$total_commandes = $result->fetch_assoc()['total_commandes'];
+
+// Fetch total articles
+$query = $conn->prepare("SELECT COUNT(*) as total_articles FROM articles");
+$query->execute();
+$result = $query->get_result();
+$total_articles = $result->fetch_assoc()['total_articles'];
+
+// Fetch total commandes not finished
+$query = $conn->prepare("SELECT COUNT(*) as total_commandes_pasfini FROM commandes WHERE fini = 0");
+$query->execute();
+$result = $query->get_result();
+$total_commandes_pasfini = $result->fetch_assoc()['total_commandes_pasfini'];
+
+// Fetch list of clients (if needed)
+$query = $conn->prepare("SELECT * FROM clients");
+$query->execute();
+$clients = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Fetch list of commandes not finished (if needed)
+$query = $conn->prepare("SELECT * FROM commandes WHERE fini = 0");
+$query->execute();
+$commandes = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$conn->close();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,7 +125,7 @@
         .cartes {
             display: flex;
             flex-direction: row;
-            margin-left: 250px;
+            margin-left: 270px;
             margin-top: 90px;
             margin-bottom: 20px;
 
@@ -78,9 +135,9 @@
             border: 1px solid transparent;
             border-radius: 10px;
             padding: 20px;
-            margin-right: 10px;
-            height: 80px;
-            width: 250px;
+            margin-right: 18px;
+            height: 70px;
+            width: 190px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -100,6 +157,7 @@
             background-color: #fff;
             margin-left: 250px;
             margin-top: 30px;
+            display: flex;
 
 
 
@@ -118,6 +176,30 @@
 
 
         }
+         .card h4{
+            margin-top: -50px;
+        }
+        .icon{
+            margin-left: 160px;
+            margin-top: -65px;
+}
+.number{
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+   .bx-up-arrow-alt{
+    background-color:#A0DEFF ;
+    border-radius: 50px;
+    color: #fff;
+}
+.indicator{
+    margin-top: 20px;
+}
+.top-sales-details{
+    margin-top: 50px;
+    margin-left: -40px;
+}
     </style>
 </head>
 
@@ -145,20 +227,58 @@
     <section class="cartes">
         <div class="card">
             <h4>Commandes</h4>
+            <div class="number"><?php echo $total_commandes; ?></div>
+            <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Depuis hier</span>
+              </div>            <div class="icon">
+              <i class="bx bx-cart-alt cart" style="background-color: #A0DEFF;color:#5AB2FF;padding:8px;font-size:21px;border-radius:12px"></i></div>
         </div>
         <div class="card">
             <h4>Clients</h4>
+            <div class="number"><?php echo $total_clients; ?></div>
+            <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Depuis hier</span>
+              </div>            
+              <div class="icon">
+              <i class="bx bxs-cart-add cart two" style="background-color: #B6FFCE;color:#14C38E;padding:8px;font-size:21px;border-radius:12px"></i></div>
+
         </div>
         <div class="card">
             <h4>Articles</h4>
+            <div class="number"><?php echo $total_articles ?></div>
+            <div class="indicator">
+                <i class="bx bx-up-arrow-alt" ></i>
+                <span class="text">Depuis hier</span>
+              </div>            
+              <div class="icon">
+              <i class="bx bx-cart-alt cart" style="background-color: #FDE49E;color:#FF7F3E;padding:8px;font-size:21px;border-radius:12px"></i></div>
         </div>
         <div class="card">
             <h4>Commandes <br>non fini</h4>
+            <div class="number" style="margin-top:25px"><?php echo $total_commandes_pasfini ?></div>
+            <div class="icon" style="margin-top:-35px ;">
+            <i class="bx bxs-cart-download cart four" style="background-color: #FCAEAE;color:#EE4E4E;padding:8px;font-size:21px;border-radius:12px"></i></div>
         </div>
     </section>
     <section class="client">
         <div></div>
         <h4 style="margin-left: 10px;">Clients</h4>
+        <ul class="top-sales-details">
+
+              <?php
+                foreach($clients as $client){
+                   echo "<li>";
+                   echo "<span class='price'> ".$client["nomClient"] ."</span>";
+                   echo "<a href='mailto:".$client["emailClient"] ."'>";
+                   echo "<span style='color:#0d3073' class='product'> ".$client["emailClient"] ."</span>";
+                   echo "</a>";
+                   echo "</li>";
+                }
+              ?>
+             
+            </ul>
 
 
     </section>

@@ -154,17 +154,32 @@ table.customTable th {
     margin-top: 90px;
     display: flex; /* Use flexbox */
     flex-direction: column;
-padding: 20px;
+    padding: 20px;
 }
 .search-box {
-            position: relative;
-            height: 50px;
-            max-width: 550px;
-            width: 100%;
-            margin-left: 20px;
-            margin-top: 5px;
+    position: relative;
+  height: 50px;
+  max-width: 550px;
+  width: 100%;
+  margin: -35px 960px;
         }
-        
+        .search-box input {
+            border-radius: 5px;
+            width: 300px;
+            height: 16px;
+            border: 1px solid #000;
+            outline: none;
+           
+        }
+         .search-box button {
+            height: 25px;
+            background-color: #081d45;
+            color: #fff;
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+            
+        }
     </style>
 </head>
 
@@ -173,7 +188,7 @@ padding: 20px;
         <div class="header">
             <h2 style="margin-left: 220px;font-size:17px;margin-top:15px;color:#102C57;">Commandes</h2>
             <div class="search-box">
-         <form action="chercher_commande.php" method="get">
+         <form action="chercher.php" method="get">
          <input style="padding:5px" type="text" name="ref" placeholder="Recherche..." />
          <button style="cursor:pointer" type="submit"><i class="bx bx-search"></i></button>
          </form>
@@ -185,9 +200,9 @@ padding: 20px;
             <ul>
                 <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
                 <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
-                <li><a href=""><i class='bx bx-box'></i>Commandes</a></li>
-                <li><a href=""><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
-                <li><a href=""><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
+                <li><a href="commande.php"><i class='bx bx-box'></i>Commandes</a></li>
+                <li><a href="fournisseur.php"><i class='bx bxs-pie-chart-alt' style='color:#ffffff'></i>Fournisseurs</a></li>
+                <li><a href="achat.php"><i class='bx bxs-cylinder' style='color:#ffffff'></i>Achats</a></li>
                 <li><a href="article.php"><i class='bx bxs-t-shirt'></i>Tous les articles</a></li>
                 <div style="margin-top: 220px;"></div>
                 <li><a href="logout.php"><i class='bx bx-log-out'></i>Déconnexion</a></li>
