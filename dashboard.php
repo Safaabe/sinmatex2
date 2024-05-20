@@ -153,12 +153,12 @@ $conn->close();
             border: 1px solid transparent;
             border-radius: 15px;
             width: 430px;
-            height: 300px;
+            height: 400px;
             background-color: #fff;
             margin-left: 250px;
             margin-top: 30px;
             display: flex;
-
+            
 
 
         }
@@ -196,10 +196,49 @@ $conn->close();
 .indicator{
     margin-top: 20px;
 }
-.top-sales-details{
-    margin-top: 50px;
-    margin-left: -40px;
+.top-sales-details {
+            margin-top: 60px;
+            margin-left: -30px;
+            flex: 1;
+        }
+
+        .product {
+            margin-left: 50px;
+            color: #0d3073;
+        }
+        .sales-details {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Adds space between columns */
+    padding: 20px;
 }
+
+.details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.voir{
+    border-bottom: 10px;
+    margin-left: 500px;
+    margin-top: -30px;
+}
+.voir a{
+   
+
+    background-color: #0d3073;
+    width: 70px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 7px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    
+   
+}
+
+      
     </style>
 </head>
 
@@ -210,7 +249,7 @@ $conn->close();
         </div>
 
         <div class="sidebar">
-            <div class="logo"><img src="img/sinmatex.png" alt="simatex"></div>
+            <div class="logo"><img src="img/sinmatex.png" alt="simatex" ></div>
             <ul>
                 <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
                 <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
@@ -285,7 +324,53 @@ $conn->close();
     <section class="cmd">
         <div></div>
         <h4 style="margin-left: 10px;">Commandes non fini</h4>
-
+        <div class="sales-details">
+              <ul class="details">
+                <li class="topic" style="color:#0d3073">Numéro</li>
+                <?php 
+                   foreach($commandes as $commande){
+                      echo $commande["id"];
+                      echo "<br/>";
+                   }
+                ?>
+              </ul>
+              <ul class="details">
+                <li class="topic" style="color:#0d3073">Quantité</li>
+                <?php 
+                   foreach($commandes as $commande){
+                      echo $commande["quantity"];
+                      echo "<br/>";
+                   }
+                ?>
+              </ul>
+              <ul class="details">
+                <li class="topic" style="color:#0d3073">Date de Commande</li>
+                <?php 
+                   foreach($commandes as $commande){
+                      echo $commande["date_commande"];
+                      echo "<br/>";
+                   }
+                ?>
+              </ul>
+              <ul class="details">
+                <li class="topic" style="color:#0d3073">Date de Livraison</li>
+                <?php 
+                   foreach($commandes as $commande){
+                      echo $commande["date_livraison"];
+                      echo "<br/>";
+                   }
+                ?>
+              </ul>
+            </div>
+            <br>
+            <br><br><br><br>
+            <br><br>
+            <div class="voir">
+              <a href="./commande.php">Voir Tout</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </section>
 
