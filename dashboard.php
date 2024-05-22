@@ -74,6 +74,8 @@ $conn->close();
             font-family: "Rubik", sans-serif;
            
         }
+       
+        
 
         .header {
             width: 100%;

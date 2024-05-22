@@ -18,7 +18,7 @@ if (!$id) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT * FROM achats WHERE id_achat = ?");
+$stmt = $conn->prepare("SELECT * FROM achats WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $article = $stmt->get_result()->fetch_assoc();
@@ -29,7 +29,7 @@ if (!$article) {
 }
 
 // Proceed with deletion
-$sql = "DELETE FROM achats WHERE id_achat = ?";
+$sql = "DELETE FROM achats WHERE id = ?";
 $query = $conn->prepare($sql);
 $query->bind_param('i', $id);
 $query->execute();

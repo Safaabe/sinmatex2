@@ -282,10 +282,10 @@ if ($result_achats->num_rows > 0) {
                             <td><?php echo $achat['service']; ?></td>
                             <td><?php echo $achat['date_achat']; ?></td>
                             <td style="width: 20px;">
-    <a href="modifier_article.php?id=<?php echo $article['id']; ?>">
-        <i style="font-size: 20px;color: #FDDA0D !important" class="bx bx-edit"></i>
+    <a href="bon_achat.php?id=<?php echo $achat['id']; ?>">
+        <i style="font-size: 20px;color:#2697ff !important" class="bx bx-printer"></i>
     </a>
-    <a href="./supp_achat.php?ref=<?php echo $article['id']; ?>">
+    <a href="./supp_achat.php?ref=<?php echo $achat['id']; ?>">
         <i style="font-size: 20px;color: #FF0000 !important" class="bx bx-trash"></i>
     </a>
 </td>
