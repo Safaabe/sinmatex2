@@ -217,7 +217,7 @@
                             echo '<td><a href="./bonCommande.php?numcommande=' . $row["id"] . '">  <i style="font-size:20px;color:#2697ff !important" class="bx bx-printer"></i></td>';
                         } else {
                             echo "<td>pas fini</td>";
-                            echo '<td><a href="./bon_commande.php?numcommande=' . $row["id"] . '">  <i style="font-size:20px;color:#2697ff !important" class="bx bx-printer"></i></a><a href="./fini_commande.php?ref=' . $row["id"] . '"><i style="font-size:20px;color:#008000 !important" class="bx bx-check-circle"></i></a></td>';
+                            echo '<td><a href="./bonCommande.php?numcommande=' . $row["id"] . '">  <i style="font-size:20px;color:#2697ff !important" class="bx bx-printer"></i></a><a href="./fini_commande.php?ref=' . $row["id"] . '"><i style="font-size:20px;color:#008000 !important" class="bx bx-check-circle"></i></a></td>';
                         }
 
                         echo "</tr>";

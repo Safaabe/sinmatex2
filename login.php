@@ -60,44 +60,40 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.google.com/specimen/Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <title>sinmatex</title>
     <style>
         * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
-            
-
+            font-family: 'Rubik', sans-serif;
         }
 
-
-        .page {
-            background-image: url('img/sin.jpg');
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('img/home.jpg');
             background-repeat: no-repeat;
             background-size: cover;
-
         }
 
         .form {
             width: 400px;
-            height: 300px;
-            border: 1px solid transparent;
             border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             background-color: #fff;
-
-            margin-left: 450px;
-            margin-top: 180px;
-            padding-top: 30px;
-            padding-bottom: 30px;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            height: 300px;
         }
 
+
         #boutton {
-            width: 200px;
+            width: 300px;
             height: 30px;
             border-radius: 20px;
             background-color: #39A7FF;
@@ -105,6 +101,7 @@ $conn->close();
             border: none;
             margin-top: 10px;
             cursor: pointer;
+            margin-left: 20px;
         }
 
         .input-container {
@@ -140,21 +137,28 @@ $conn->close();
             top: -12px;
             font-size: 12px;
             color: #39A7FF;
+            
         }
-
+        
         label {
             font-size: 18px;
         }
 
         #titre {
-            font-size: 25px;
+            font-size: 30px;
             font-weight: 600;
             border: none;
-            border-bottom: 1px solid #eee;
+            /*border-bottom: 1px solid #eee;*/
             width: 400px;
-            text-align: center;
-            font-family: 'Rubik', sans-serif;
+            font-family: "Tajawal", sans-serif;
+            margin-left: 128px;        
 
+        }
+        .line {
+            background-color: #aaa;
+            width: 100%;
+            height: 1px;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -163,6 +167,7 @@ $conn->close();
     <div class="page"></div>
     <form class="form" action="login.php" method="post">
         <p id="titre">Login</p>
+        <div class="line"></div>
         <div class="input-container">
             <input type="text" id="username" name="username" required>
             <label for="username">Username</label>
