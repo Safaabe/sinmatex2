@@ -26,6 +26,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_client = $_POST["id_client"];
     $uploadOk = 1;
 
+    // Check if article already exists
+    $query_check_article = $conn->prepare("SELECT * FROM articles WHERE nom_article =? AND desc_article =?");
+    $query_check_article->bind_param("ss", $nom, $desc);
+    $query_check_article->execute();
+    $result_check_article = $query_check_article->get_result();
+    if ($result_check_article->num_rows > 0) {
+        echo "Erreur: L'article '$nom' avec la description '$desc' existe déjà.";
+        $uploadOk = 0;
+    }
+
     // Handle image upload
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
         $target_dir = "uploads/";
@@ -50,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "L'image " . htmlspecialchars(basename($_FILES["image"]["name"])) . " a été téléchargée avec succès.";
 
                     // Insert data into database only if image upload is successful
-                    $query_insert_article = $conn->prepare("INSERT INTO articles (nom_article, desc_article, image_article, id_client) VALUES (?, ?, ?, ?)");
+                    $query_insert_article = $conn->prepare("INSERT INTO articles (nom_article, desc_article, image_article, id_client) VALUES (?,?,?,?)");
                     $query_insert_article->bind_param("sssi", $nom, $desc, $target_file, $id_client);
                     if ($query_insert_article->execute()) {
                         echo "Article ajouté avec succès!";
@@ -227,18 +237,18 @@ table.customTable th {
     padding: 5px;
     width: auto; /* Let the width adjust automatically */
 }
-.p2{
+.p2 {
     border: 1px solid transparent;
     border-radius: 15px;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
     margin-left: 600px;
     position: absolute;
     top: 75px;
-    max-width: 750px;
-    height: 400px;
+    max-width: 50%; /* changed from fixed width to max-width */
+    height: auto; /* changed from fixed height to auto */
     background-color: #fff;
-  
-        
+    padding: 20px; /* added padding to make the div larger than the table */
+    overflow: auto; /* added overflow auto to make the div scrollable if the table is too large */
 }
     </style>
 </head>

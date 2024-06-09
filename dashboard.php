@@ -64,18 +64,13 @@ $conn->close();
     <title>dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
-
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #eee;
-           
             font-family: "Rubik", sans-serif;
-           
         }
-       
-        
 
         .header {
             width: 100%;
@@ -99,11 +94,14 @@ $conn->close();
             z-index: 100;
         }
 
-        .sidebar img {
-            width: 155px;
+        .sidebar .logo img {
+
+            max-width: 155px;
             height: 50px;
             padding-bottom: 30px;
             margin-left: 10px;
+            width: 250px;
+            height: 55px;
         }
 
         ul {
@@ -120,9 +118,11 @@ $conn->close();
             font-size: 15px;
         }
 
+      
         ul li i {
             margin-right: 10px;
         }
+        
 
         .cartes {
             display: flex;
@@ -130,7 +130,6 @@ $conn->close();
             margin-left: 270px;
             margin-top: 90px;
             margin-bottom: 20px;
-
         }
 
         .card {
@@ -142,13 +141,11 @@ $conn->close();
             width: 190px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-
         }
 
         .card h4 {
             position: absolute;
-            top: 150px
+            top: 150px;
         }
 
         .client {
@@ -160,9 +157,6 @@ $conn->close();
             margin-left: 250px;
             margin-top: 30px;
             display: flex;
-            
-
-
         }
 
         .cmd {
@@ -174,31 +168,34 @@ $conn->close();
             margin-left: 700px;
             position: absolute;
             top: 250px;
-
-
-
         }
-         .card h4{
+
+        .card h4 {
             margin-top: -50px;
         }
-        .icon{
+
+        .icon {
             margin-left: 160px;
             margin-top: -65px;
-}
-.number{
-    margin-top: 10px;
-    font-size: 20px;
-    font-weight: 600;
-}
-   .bx-up-arrow-alt{
-    background-color:#A0DEFF ;
-    border-radius: 50px;
-    color: #fff;
-}
-.indicator{
-    margin-top: 20px;
-}
-.top-sales-details {
+        }
+
+        .number {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .bx-up-arrow-alt {
+            background-color: #A0DEFF;
+            border-radius: 50px;
+            color: #fff;
+        }
+
+        .indicator {
+            margin-top: 20px;
+        }
+
+        .top-sales-details {
             margin-top: 60px;
             margin-left: -30px;
             flex: 1;
@@ -208,39 +205,36 @@ $conn->close();
             margin-left: 50px;
             color: #0d3073;
         }
+
         .sales-details {
-    display: flex;
-    flex-direction: row;
-    gap: 20px; /* Adds space between columns */
-    padding: 20px;
-}
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            padding: 20px;
+        }
 
-.details {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.voir{
-    border-bottom: 10px;
-    margin-left: 500px;
-    margin-top: -30px;
-}
-.voir a{
-   
+        .details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    background-color: #0d3073;
-    width: 70px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    padding: 7px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    
-   
-}
+        .voir {
+            border-bottom: 10px;
+            margin-left: 500px;
+            margin-top: -30px;
+        }
 
-      
+        .voir a {
+            background-color: #0d3073;
+            width: 70px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            padding: 7px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -251,7 +245,7 @@ $conn->close();
         </div>
 
         <div class="sidebar">
-            <div class="logo"><img src="img/sinmatex.png" alt="simatex" ></div>
+            <div class="logo"><img src="img/sinmatex.png" alt="simatex"></div>
             <ul>
                 <li><a href="dashboard.php"><i class='bx bx-line-chart' style='color:#ffffff'></i> Dashboard</a></li>
                 <li><a href="client.php"><i class='bx bxs-group' style='color:#ffffff'></i>Clients</a></li>
@@ -272,8 +266,10 @@ $conn->close();
             <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
-              </div>            <div class="icon">
-              <i class="bx bx-cart-alt cart" style="background-color: #A0DEFF;color:#5AB2FF;padding:8px;font-size:21px;border-radius:12px"></i></div>
+            </div>
+            <div class="icon">
+                <i class="bx bx-cart-alt cart" style="background-color: #A0DEFF;color:#5AB2FF;padding:8px;font-size:21px;border-radius:12px"></i>
+            </div>
         </div>
         <div class="card">
             <h4>Clients</h4>
@@ -281,26 +277,28 @@ $conn->close();
             <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
-              </div>            
-              <div class="icon">
-              <i class="bx bxs-cart-add cart two" style="background-color: #B6FFCE;color:#14C38E;padding:8px;font-size:21px;border-radius:12px"></i></div>
-
+            </div>
+            <div class="icon">
+                <i class="bx bxs-cart-add cart two" style="background-color: #B6FFCE;color:#14C38E;padding:8px;font-size:21px;border-radius:12px"></i>
+            </div>
         </div>
         <div class="card">
             <h4>Articles</h4>
             <div class="number"><?php echo $total_articles ?></div>
             <div class="indicator">
-                <i class="bx bx-up-arrow-alt" ></i>
+                <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
-              </div>            
-              <div class="icon">
-              <i class="bx bx-cart-alt cart" style="background-color: #FDE49E;color:#FF7F3E;padding:8px;font-size:21px;border-radius:12px"></i></div>
+            </div>
+            <div class="icon">
+                <i class="bx bx-cart-alt cart" style="background-color: #FDE49E;color:#FF7F3E;padding:8px;font-size:21px;border-radius:12px"></i>
+            </div>
         </div>
         <div class="card">
             <h4>Commandes <br>non fini</h4>
             <div class="number" style="margin-top:25px"><?php echo $total_commandes_pasfini ?></div>
-            <div class="icon" style="margin-top:-35px ;">
-            <i class="bx bxs-cart-download cart four" style="background-color: #FCAEAE;color:#EE4E4E;padding:8px;font-size:21px;border-radius:12px"></i></div>
+            <div class="icon" style="margin-top:-35px;">
+                <i class="bx bxs-cart-download cart four" style="background-color: #FCAEAE;color:#EE4E4E;padding:8px;font-size:21px;border-radius:12px"></i>
+            </div>
         </div>
     </section>
     <section class="client">
@@ -308,18 +306,18 @@ $conn->close();
         <h4 style="margin-left: 10px;">Clients</h4>
         <ul class="top-sales-details">
 
-              <?php
-                foreach($clients as $client){
-                   echo "<li>";
-                   echo "<span class='price'> ".$client["nomClient"] ."</span>";
-                   echo "<a href='mailto:".$client["emailClient"] ."'>";
-                   echo "<span style='color:#0d3073' class='product'> ".$client["emailClient"] ."</span>";
-                   echo "</a>";
-                   echo "</li>";
-                }
-              ?>
-             
-            </ul>
+            <?php
+            foreach ($clients as $client) {
+                echo "<li>";
+                echo "<span class='price'> " . $client["nomClient"] . "</span>";
+                echo "<a href='mailto:" . $client["emailClient"] . "'>";
+                echo "<span style='color:#0d3073' class='product'> " . $client["emailClient"] . "</span>";
+                echo "</a>";
+                echo "</li>";
+            }
+            ?>
+
+        </ul>
 
 
     </section>
@@ -327,52 +325,52 @@ $conn->close();
         <div></div>
         <h4 style="margin-left: 10px;">Commandes non fini</h4>
         <div class="sales-details">
-              <ul class="details">
+            <ul class="details">
                 <li class="topic" style="color:#0d3073">Numéro</li>
-                <?php 
-                   foreach($commandes as $commande){
-                      echo $commande["id"];
-                      echo "<br/>";
-                   }
+                <?php
+                foreach ($commandes as $commande) {
+                    echo $commande["id"];
+                    echo "<br/>";
+                }
                 ?>
-              </ul>
-              <ul class="details">
+            </ul>
+            <ul class="details">
                 <li class="topic" style="color:#0d3073">Quantité</li>
-                <?php 
-                   foreach($commandes as $commande){
-                      echo $commande["quantity"];
-                      echo "<br/>";
-                   }
+                <?php
+                foreach ($commandes as $commande) {
+                    echo $commande["quantity"];
+                    echo "<br/>";
+                }
                 ?>
-              </ul>
-              <ul class="details">
+            </ul>
+            <ul class="details">
                 <li class="topic" style="color:#0d3073">Date de Commande</li>
-                <?php 
-                   foreach($commandes as $commande){
-                      echo $commande["date_commande"];
-                      echo "<br/>";
-                   }
+                <?php
+                foreach ($commandes as $commande) {
+                    echo $commande["date_commande"];
+                    echo "<br/>";
+                }
                 ?>
-              </ul>
-              <ul class="details">
+            </ul>
+            <ul class="details">
                 <li class="topic" style="color:#0d3073">Date de Livraison</li>
-                <?php 
-                   foreach($commandes as $commande){
-                      echo $commande["date_livraison"];
-                      echo "<br/>";
-                   }
+                <?php
+                foreach ($commandes as $commande) {
+                    echo $commande["date_livraison"];
+                    echo "<br/>";
+                }
                 ?>
-              </ul>
-            </div>
-            <br>
-            <br><br><br><br>
-            <br><br>
-            <div class="voir">
-              <a href="./commande.php">Voir Tout</a>
-            </div>
-          </div>
+            </ul>
         </div>
-      </div>
+        <br>
+        <br><br><br><br>
+        <br><br>
+        <div class="voir">
+            <a href="./commande.php">Voir Tout</a>
+        </div>
+        </div>
+        </div>
+        </div>
 
     </section>
 
